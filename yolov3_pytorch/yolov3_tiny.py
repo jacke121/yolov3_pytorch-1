@@ -97,3 +97,19 @@ class Yolov3TinyBackbone(nn.Module):
         x_b_full = self.layers[self.idx:](x_b_0)
         return x_b_0, x_b_full
 
+if __name__ == '__main__':
+    model = Yolov3Tiny(num_classes=1, use_wrong_previous_anchors=True)
+    # model.load_state_dict(torch.load('data/models/yolov3_tiny_coco_01.h5'))
+    model.cuda()
+    model.eval()  # .cuda()
+
+    for i in range(20):
+        x = torch.rand(1, 3, 352, 352)
+        t1 = time.time()
+        out4, out5 = model(x.cuda())
+        # print(out3)
+        # print(out3.size())
+        # print(out4.size())
+        # print(out5.size())
+        cnt = time.time() - t1
+        print(cnt)
